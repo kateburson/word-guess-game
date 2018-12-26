@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    position: relative;
+    float: left;
+    width: 25%;
+    color: black;
+    font-family: 'Nanum Pen Script', cursive;
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-size: 60pt;
+    padding: 15px;
+    margin-left: 2.5%;
+    margin-top: 40px;
+}
+
+img {
+    width: 100%;
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    repeat: repeat-y;
+}
+
+#box {
+    position: relative;
+    float: right;
+    width: 50%;
+    height: 500px;
+    background-color: rgba(183, 157, 112, .9);
+    border-radius: 25px;
+    padding: 50px;
+    margin: 50px;
+}
+
+#word {
+    text-decoration: underline;
+}
+
+p {
+    font-family: 'Space Mono', monospace;
+}
