@@ -39,8 +39,21 @@ img {
     margin: 50px;
 }
 
-#word {
+#start {
+    font-family: 'Space Mono', monospace;
+    font-size: 18pt;
+}
+
+ul {
+    letter-spacing: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 36pt;
+    list-style-type: none;
+}
+
+li {
     text-decoration: underline;
+    
 }
 
 p {
