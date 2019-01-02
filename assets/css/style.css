@@ -44,16 +44,10 @@ img {
     font-size: 18pt;
 }
 
-ul {
-    letter-spacing: 10px;
+#currentword {
     font-family: 'Space Mono', monospace;
     font-size: 36pt;
     list-style-type: none;
-}
-
-li {
-    text-decoration: underline;
-    
 }
 
 p {
