@@ -18,28 +18,6 @@ var losses = 0;
 var started = false;
 var placeholder = [];
 
-// function keyPress() {
-//     var key = event.key.toLowerCase();
-//     var code = event.keyCode;
-//     // console.log(event.keyCode);
-//     if(code >= 61 && code <= 122) {
-//         if(lettersUsed.indexOf(key) === -1){
-//             lettersUsed.push(key);
-//             $('#guesses').html('Letters Guessed: ' + lettersUsed);
-//             guessesRemaining--;
-//             $('#remaining').html('Guesses Remaining: ' + guessesRemaining);
-//             for(i=0; i<currentWord.length; i++){
-//                 var tempWord = currentWord;
-//                 var index = tempWord.indexOf(key);
-//                 if(index >= 0) {
-//                     tempWord.replace(key, '*');
-//                     placeholder.replace('*', key);
-//                 }
-//             }
-//         }
-//     }
-// };
-
 function generateWord() {
     started = true;
     console.log('started = true');
@@ -54,32 +32,34 @@ function generateWord() {
 function keyPress() {
     var key = event.key.toLowerCase();
     var code = event.keyCode;
-    guessesRemaining--;
-    console.log(code);
-    if(currentWord.indexOf(key) === -1) {
-        lettersUsed.push(key);
-        $('#guesses').html('Letters Guessed: ' + lettersUsed);
+    if(code >= 61 && code <= 122) {
+        guessesRemaining--;
         $('#remaining').html('Guesses Remaining: ' + guessesRemaining);
-        } 
-    for(i=0; i<currentWord.length; i++) {
-        var tempWord = currentWord;
-        index = currentWord.indexOf(key);
-        if(index >= 0) {
-            currentWord = tempWord.replace(key, '*'); 
-            console.log('current word: ' + currentWord);
-            placeholder.splice(index, 1, key);
-            console.log('placeholder: ' + placeholder);
-            $('#currentword').html(placeholder);
+        if(currentWord.indexOf(key) === -1) {
+            lettersUsed.push(key);
+            $('#guesses').html('Letters Guessed: ' + lettersUsed);
+            console.log(code);
         }
+        for(i=0; i<currentWord.length; i++) {
+            var tempWord = currentWord;
+            index = currentWord.indexOf(key);
+            if(index >= 0) {
+                currentWord = tempWord.replace(key, '*'); 
+                console.log('current word: ' + currentWord);
+                placeholder.splice(index, 1, key);
+                console.log('placeholder: ' + placeholder);
+                $('#currentword').html(placeholder);
+            } else if(tempWord === placeholder) {
+                started = false;
+                currentWord = '';
+                guessesRemaining = 10;
+                lettersUsed = [];
+                wins++;
+                placeholder = [];
+                generateWord();
+            }
+        }  
     }
-        // } if(tempWord === currentWord) {
-        //     currentWord = '';
-        //     guessesRemaining = 10;
-        //     lettersUsed = [];
-        //     wins++;
-        //     placeholder = '';
-        //     generateWord();
-        // }
 };
 
 //  Calling Functions 
@@ -95,11 +75,4 @@ $('#button').on('click', function(){
 });
 
 // $(document).on('keyup', keyPress());
-
-
-
-
-
-
-
 
