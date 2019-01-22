@@ -60,27 +60,26 @@ function keyPress() {
         lettersUsed.push(key);
         $('#guesses').html('Letters Guessed: ' + lettersUsed);
         $('#remaining').html('Guesses Remaining: ' + guessesRemaining);
-    } 
-    var index = currentWord.indexOf(key);
-    if(index >= 0){
-        for(i=0; i<currentWord.length; i++) {
+        } 
+    for(i=0; i<currentWord.length; i++) {
+        var tempWord = currentWord;
+        index = currentWord.indexOf(key);
+        if(index >= 0) {
+            currentWord = tempWord.replace(key, '*'); 
+            console.log('current word: ' + currentWord);
             placeholder.splice(index, 1, key);
             console.log('placeholder: ' + placeholder);
             $('#currentword').html(placeholder);
-            if(currentWord === placeholder.toString()) {
-                currentWord = '';
-                guessesRemaining = 10;
-                lettersUsed = [];
-                wins++;
-                placeholder = '';
-                generateWord();
-            }
-        }   
+        }
     }
-};
-
-function video() {
-
+        // } if(tempWord === currentWord) {
+        //     currentWord = '';
+        //     guessesRemaining = 10;
+        //     lettersUsed = [];
+        //     wins++;
+        //     placeholder = '';
+        //     generateWord();
+        // }
 };
 
 //  Calling Functions 
