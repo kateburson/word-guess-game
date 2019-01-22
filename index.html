@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Freakin' Word Guess</title>
+    <title>Napoleon Dynamite Word Guess</title>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script|Space+Mono" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body>
-
-    <div id="background">
-        <img src="assets/images/wallpaper.jpg">
-    </div>
-    
-    <h1>freakin' word guess</h1>
-    
+<body background="assets/images/floral.jpg">
+    <header>
+        <h1>napoleon dynamite word guess</h1>
+    </header>
     <div id="box">
         
-        <div id="start"></div>
-
+        <button id="button">Word Generator</button>
+        <br><br>
         <div id="currentword"></div>
-
-        <div id="guesses"></div>
-        <div id="score"></div>
+        <div id="boxbox">
+            <div id="guesses">Letters Guessed: </div>
+            <div id="remaining">Guesses Remaining: 10</div>
+            <div id="wins">Wins: </div>
+            <div id="losses">Losses: </div>
+        </div>
     </div>
 
     <script src="assets/javascript/game.js"></script>

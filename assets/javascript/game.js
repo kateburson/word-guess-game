@@ -1,4 +1,3 @@
-
 var wordBank = [
     'chapstick', 
     'quesedilla', 
@@ -11,53 +10,97 @@ var wordBank = [
     'college',
     'tots'
 ];
-
-var randomWord = "";
-var lettersOfWord = []
-var blanks = 0;
-var blanksAndCorrect = [];
-var wrongGuess = [];
-var guess = [];
-
+var currentWord = '';
+var guessesRemaining = 10;
+var lettersUsed = [];
 var wins = 0;
 var losses = 0;
-var guessesRemaining = 9;
+var started = false;
+var placeholder = [];
 
-function start() {
-    var start = document.getElementById('start');
-    var div = document.createElement('div');
-    div.textContent = "Press any key to start.";
-    start.appendChild(div);
-    if(window.onkeyup) {
-        start.removeChild(div);
-    }
-};
+// function keyPress() {
+//     var key = event.key.toLowerCase();
+//     var code = event.keyCode;
+//     // console.log(event.keyCode);
+//     if(code >= 61 && code <= 122) {
+//         if(lettersUsed.indexOf(key) === -1){
+//             lettersUsed.push(key);
+//             $('#guesses').html('Letters Guessed: ' + lettersUsed);
+//             guessesRemaining--;
+//             $('#remaining').html('Guesses Remaining: ' + guessesRemaining);
+//             for(i=0; i<currentWord.length; i++){
+//                 var tempWord = currentWord;
+//                 var index = tempWord.indexOf(key);
+//                 if(index >= 0) {
+//                     tempWord.replace(key, '*');
+//                     placeholder.replace('*', key);
+//                 }
+//             }
+//         }
+//     }
+// };
 
-function game() {
-    randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
-    lettersOfWord = randomWord.split("");
-    blanks = lettersOfWord.length;
-    for (var i = 0; i < blanks; i++) {
-        blanksAndCorrect.push("_");
+function generateWord() {
+    started = true;
+    console.log('started = true');
+    currentWord = wordBank[Math.floor(Math.random() * wordBank.length)];
+    console.log(currentWord);
+    for(var i=0; i<currentWord.length; i++) {
+        placeholder.push('*');
     };
-    
-    document.getElementById("currentword").innerHTML = "  " + blanksAndCorrect.join("  ");
+    $('#currentword').html(placeholder);
 };
 
-function letterCheck(event) { 
-    var guess = event.key.toLowerCase();
-    if(guess === lettersOfWord) {
-        console.log(guess); 
-        guess.push(guess);
-        document.getElementById("currentword").replaceWith(lettersOfWord);
-    }
-    else {
-        guess.push(wrongGuess);
+function keyPress() {
+    var key = event.key.toLowerCase();
+    var code = event.keyCode;
+    guessesRemaining--;
+    console.log(code);
+    if(currentWord.indexOf(key) === -1) {
+        lettersUsed.push(key);
+        $('#guesses').html('Letters Guessed: ' + lettersUsed);
+        $('#remaining').html('Guesses Remaining: ' + guessesRemaining);
+    } 
+    var index = currentWord.indexOf(key);
+    if(index >= 0){
+        for(i=0; i<currentWord.length; i++) {
+            placeholder.splice(index, 1, key);
+            console.log('placeholder: ' + placeholder);
+            $('#currentword').html(placeholder);
+            if(currentWord === placeholder.toString()) {
+                currentWord = '';
+                guessesRemaining = 10;
+                lettersUsed = [];
+                wins++;
+                placeholder = '';
+                generateWord();
+            }
+        }   
     }
 };
 
-window.onload = start();
+function video() {
 
-window.onkeyup = game();
+};
 
-window.onkeyup = letterCheck();
+//  Calling Functions 
+
+document.addEventListener('keyup', function(){
+    keyPress();
+});
+
+$('#button').on('click', function(){
+    if(started === false) {
+        generateWord();
+    }
+});
+
+// $(document).on('keyup', keyPress());
+
+
+
+
+
+
+
+
