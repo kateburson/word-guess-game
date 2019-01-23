@@ -46,7 +46,7 @@ div {
 }
 
 #box {
-    width: 50%;
+    width: 60%;
     height: auto;
     margin: auto;
     margin-top: 50px;
@@ -67,4 +67,8 @@ div {
     font-family: 'Nanum Pen Script', cursive;
     font-size: 60pt;
     list-style-type: none;
+}
+
+#video {
+    display: none;
 }
