@@ -26,7 +26,7 @@ $(document).ready(function() {
         'assets/images/tots.mp4',
     ];
 
-    count = 0;
+    var count = 0;
     var currentWord = '';
     var guessesRemaining = 10;
     var lettersUsed = [];
@@ -38,8 +38,16 @@ $(document).ready(function() {
     function generateWord() {
         started = true;
         console.log('started = true');
+
+        currentWord = '';
+        $('#currentword').html(currentWord);
         currentWord = wordBank[count];
         console.log(currentWord);
+
+        $('#video').empty();
+        console.log('video div empty');
+        $('#video').css({'display':'none'});
+
         for(var i=0; i<currentWord.length; i++) {
             placeholder.push('*');
         };
@@ -67,28 +75,33 @@ $(document).ready(function() {
                     console.log('placeholder: ' + placeholder);
                     $('#currentword').html(placeholder);
                     if(placeholder.indexOf('*')=== -1) {
-                        $('#currentword').html(tempWord);
-                        $('#video').html('<source src="' + video[count] + '" type="video/mp4">').css({'display':'inline'});
+                        $('#currentword').html(wordBank[count]);
+                        console.log(video[count]);
+                        $('#video').append('<source src="' + video[count] + '" type="video/mp4"/>').css({'display':'inline'});
                         started = false;
-                        currentWord = '';
                         guessesRemaining = 10;
                         $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
                         lettersUsed = [];
+                        $('#guesses').html('Letters Used: ' + lettersUsed);
                         wins++;
                         $('#wins').html('Wins: ' + wins);
                         console.log(wins);
                         placeholder = [];
                         count++;
-                        generateWord();
+                        $('#video').on('ended', function(){
+                            if(started === false) {
+                                generateWord();
+                            }
+                        });
                     }
                 }
             } 
         } 
         if (guessesRemaining === 0) {
-            $('#currentword').html(tempWord);
-            $('#video').html('<source src="' + video[count] + '" type="video/mp4">').css({'display':'inline'});
+            $('#currentword').html(wordBank[count]);
+            console.log(video[count]);
+            $('#video').append('<source src="' + video[count] + '" type="video/mp4"/>').css({'display':'inline'});
             started = false;
-            currentWord = '';
             guessesRemaining = 10;
             $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
             lettersUsed = [];
@@ -97,8 +110,12 @@ $(document).ready(function() {
             $('#losses').html('Losses: ' + losses);
             console.log(losses);
             placeholder = [];
-            count++
-            generateWord(); 
+            count++;
+            $('#video').on('ended', function(){
+                if(started === false) {
+                    generateWord();
+                }
+            });
         }
     };
 

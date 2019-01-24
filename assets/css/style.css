@@ -21,7 +21,6 @@ button:hover {
 
 header {
     background-color: white;
-    margin-top: 15px;
     box-shadow: 10px 10px black;
 }
 
@@ -31,7 +30,7 @@ h1 {
     text-transform: uppercase;
     text-align: center;
     font-size: 60pt;
-    margin: 30px auto 10px auto;
+    /* margin: 30px auto 10px auto; */
     font-weight: bolder;
 }
 
@@ -67,6 +66,7 @@ div {
     font-family: 'Nanum Pen Script', cursive;
     font-size: 60pt;
     list-style-type: none;
+    margin-bottom: 0;
 }
 
 #video {
