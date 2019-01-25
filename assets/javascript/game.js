@@ -55,6 +55,26 @@ $(document).ready(function() {
         $('#currentword').html(placeholder);
     };
 
+    function playAgain(){
+        
+        $('#video').empty();
+        $('#video').append('<source src="assets/images/dance.mp4" type="video/mp4"/>').css({'display':'inline'});
+        $("#video")[0].load();
+        
+        wins++;
+        $('#wins').html('Wins: ' + wins);
+        console.log(wins);
+        placeholder = [];
+    
+        started = false;
+        wins = 0;
+        losses = 0;
+        count = -1;
+        clicked = false;
+        
+        $('#button').text('Play Again!');
+    };
+
     function keyPress() {
         var key = event.key.toLowerCase();
         var code = event.keyCode;
@@ -98,9 +118,12 @@ $(document).ready(function() {
                             $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
                             lettersUsed = [];
                             $('#guesses').html('Letters Used: ' + lettersUsed);
-                            if(started === false) {
-                                generateWord();
+                            if(count === wordBank.length){
+                                playAgain();
                             }
+                            else if(started === false) {
+                                generateWord();
+                            } 
                         });
 
                     }
@@ -120,31 +143,21 @@ $(document).ready(function() {
             placeholder = [];
             
             $('#video').on('ended', function(){
-                
                 guessesRemaining = 15;
                 $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
                 lettersUsed = [];
-                $('#guesses').html('Letters Guessed: ' + lettersUsed);
-                if(started === false) {
-                    generateWord();
+                $('#guesses').html('Letters Used: ' + lettersUsed);
+                if(count === wordBank.length){
+                    playAgain();
                 }
+                else if(started === false) {
+                    generateWord();
+                } 
             });
 
             
         }
 
-        if(count === 9 && video === 'ended') {
-            $('#video').empty();
-            $('#video').append('<source src="assets/images/dance.mp4" type="video/mp4"/>').css({'display':'inline'});
-            $("#video")[0].load();
-            started = false;
-            wins = 0;
-            losses = 0;
-            count = -1;
-            clicked = false;
-            $('#guesses').css({'display':'none'});
-            $('#remaining').css({'display':'none'});
-        }
     };
 
     //  Calling Functions 
@@ -155,8 +168,7 @@ $(document).ready(function() {
 
     $('#button').on('click', function(){
         if(started === false && clicked === false) {
-            $('#guesses').css({'display':'block'});
-            $('#remaining').css({'display':'block'});
+            $('#button').text('Word Generator');
             generateWord();
         }
     });
