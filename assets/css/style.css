@@ -29,7 +29,7 @@ h1 {
     font-family: 'Nanum Pen Script', cursive;
     text-transform: uppercase;
     text-align: center;
-    font-size: 60pt;
+    font-size: 48pt;
     /* margin: 30px auto 10px auto; */
     font-weight: bolder;
 }
@@ -61,6 +61,7 @@ div {
     width: 80%;
     margin: auto;
 } */
+
 
 #currentword {
     font-family: 'Nanum Pen Script', cursive;

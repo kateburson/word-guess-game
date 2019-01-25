@@ -26,16 +26,19 @@ $(document).ready(function() {
         'assets/images/tots.mp4',
     ];
 
-    var count = 0;
+    var count = -1;
     var currentWord = '';
-    var guessesRemaining = 10;
+    var guessesRemaining = 15;
     var lettersUsed = [];
     var wins = 0;
     var losses = 0;
     var started = false;
+    clicked = false;
     var placeholder = [];
 
     function generateWord() {
+        count++;
+        clicked = true;
         started = true;
         console.log('started = true');
 
@@ -68,6 +71,7 @@ $(document).ready(function() {
                 index = currentWord.indexOf(key);
 
                 if(index >= 0 && guessesRemaining > 0) {
+                    started = true;
                     currentWord = tempWord.replace(key, '*'); 
                     console.log('current word: ' + currentWord);
                     placeholder.splice(index, 1, key);
@@ -84,21 +88,21 @@ $(document).ready(function() {
                         
                         console.log($('#video'));
                         started = false;
-                        guessesRemaining = 10;
-                        $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
-                        lettersUsed = [];
-                        $('#guesses').html('Letters Used: ' + lettersUsed);
                         wins++;
                         $('#wins').html('Wins: ' + wins);
                         console.log(wins);
                         placeholder = [];
-                        count++;
+                        
                         $('#video').on('ended', function(){
-                            
+                            guessesRemaining = 15;
+                            $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
+                            lettersUsed = [];
+                            $('#guesses').html('Letters Used: ' + lettersUsed);
                             if(started === false) {
                                 generateWord();
                             }
                         });
+
                     }
                 }
             } 
@@ -108,33 +112,51 @@ $(document).ready(function() {
             console.log(video[count]);
             $('#video').empty();
             $('#video').append('<source src="' + video[count] + '" type="video/mp4"/>').css({'display':'inline'});
+            $("#video")[0].load();
             started = false;
-            guessesRemaining = 10;
-            $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
-            lettersUsed = [];
-            $('#guesses').html('Letters Guessed: ' + lettersUsed);
             losses++;
             $('#losses').html('Losses: ' + losses);
             console.log(losses);
             placeholder = [];
-            count++;
+            
             $('#video').on('ended', function(){
                 
+                guessesRemaining = 15;
+                $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
+                lettersUsed = [];
+                $('#guesses').html('Letters Guessed: ' + lettersUsed);
                 if(started === false) {
                     generateWord();
                 }
             });
+
+            
+        }
+
+        if(count === 9 && video === 'ended') {
+            $('#video').empty();
+            $('#video').append('<source src="assets/images/dance.mp4" type="video/mp4"/>').css({'display':'inline'});
+            $("#video")[0].load();
+            started = false;
+            wins = 0;
+            losses = 0;
+            count = -1;
+            clicked = false;
+            $('#guesses').css({'display':'none'});
+            $('#remaining').css({'display':'none'});
         }
     };
 
     //  Calling Functions 
 
-    document.addEventListener('keyup', function(){
+    $(document).on('keyup', function(){
         keyPress();
     });
 
     $('#button').on('click', function(){
-        if(started === false) {
+        if(started === false && clicked === false) {
+            $('#guesses').css({'display':'block'});
+            $('#remaining').css({'display':'block'});
             generateWord();
         }
     });
