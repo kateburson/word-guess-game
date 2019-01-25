@@ -44,8 +44,6 @@ $(document).ready(function() {
         currentWord = wordBank[count];
         console.log(currentWord);
 
-        $('#video').empty();
-        console.log('video div empty');
         $('#video').css({'display':'none'});
 
         for(var i=0; i<currentWord.length; i++) {
@@ -65,19 +63,26 @@ $(document).ready(function() {
                 $('#guesses').html('Letters Guessed: ' + lettersUsed);
                 console.log(code);
             }
-            for(i=0; i<currentWord.length; i++) {
+            for(var i=0; i<currentWord.length; i++) {
                 var tempWord = currentWord;
                 index = currentWord.indexOf(key);
+
                 if(index >= 0 && guessesRemaining > 0) {
                     currentWord = tempWord.replace(key, '*'); 
                     console.log('current word: ' + currentWord);
                     placeholder.splice(index, 1, key);
                     console.log('placeholder: ' + placeholder);
                     $('#currentword').html(placeholder);
+
                     if(placeholder.indexOf('*')=== -1) {
                         $('#currentword').html(wordBank[count]);
-                        console.log(video[count]);
+                        console.log('count',video[count]);
+
+                        $('#video').empty();
                         $('#video').append('<source src="' + video[count] + '" type="video/mp4"/>').css({'display':'inline'});
+                        $("#video")[0].load();
+                        
+                        console.log($('#video'));
                         started = false;
                         guessesRemaining = 10;
                         $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
@@ -89,6 +94,7 @@ $(document).ready(function() {
                         placeholder = [];
                         count++;
                         $('#video').on('ended', function(){
+                            
                             if(started === false) {
                                 generateWord();
                             }
@@ -100,6 +106,7 @@ $(document).ready(function() {
         if (guessesRemaining === 0) {
             $('#currentword').html(wordBank[count]);
             console.log(video[count]);
+            $('#video').empty();
             $('#video').append('<source src="' + video[count] + '" type="video/mp4"/>').css({'display':'inline'});
             started = false;
             guessesRemaining = 10;
@@ -112,6 +119,7 @@ $(document).ready(function() {
             placeholder = [];
             count++;
             $('#video').on('ended', function(){
+                
                 if(started === false) {
                     generateWord();
                 }
