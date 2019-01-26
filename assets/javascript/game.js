@@ -69,11 +69,13 @@ $(document).ready(function() {
     function playAgain(){
         placeholder = [];
         started = false;
+        clicked = false;
         wins = 0;
         losses = 0;
         count = -1;
-        clicked = false;
+        
         $('#button').text('Play Again!');
+        $('#button').on('click', generateWord);
     };
 
     function keyPress() {
@@ -87,9 +89,9 @@ $(document).ready(function() {
                 $('#guesses').html('Letters Guessed: ' + lettersUsed);
                 console.log(code);
             }
-            for(var i=0; i<currentWord.length; i++) {
+            for(var i = 0; i < currentWord.length; i++) {
                 var tempWord = currentWord;
-                index = currentWord.indexOf(key);
+                var index = currentWord.indexOf(key);
 
                 if(index >= 0 && guessesRemaining > 0) {
                     started = true;
@@ -115,16 +117,18 @@ $(document).ready(function() {
                         placeholder = [];
                         
                         $('#video').on('ended', function(){
+                            guessesRemaining = 15;
+                            $('#remaining').html('Guesses Remaining: ' + guessesRemaining);
+                            lettersUsed = [];
+                            $('#guesses').html('Letters Used: ' + lettersUsed);
                             if(started === false) {
                                 generateWord();
                             }
                         });
 
                     } if(count === 9) {
-        
-                        
                         guessesRemaining = 15;
-                        $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
+                        $('#remaining').html('Guesses Remaining: ' + guessesRemaining);
                         lettersUsed = [];
                         $('#guesses').html('Letters Used: ' + lettersUsed);
 
