@@ -74,7 +74,7 @@ $(document).ready(function() {
         losses = 0;
         count = -1;
         
-        $('#button').text('Play Again!');
+        $('#button').text('Vote For Pedro');
         $('#button').on('click', generateWord);
     };
 
