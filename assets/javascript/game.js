@@ -10,7 +10,8 @@ $(document).ready(function() {
         'dreams', 
         'babes', 
         'college',
-        'tots'
+        'tots',
+        'lalalalla'
     ];
 
     var video = [
@@ -33,7 +34,7 @@ $(document).ready(function() {
     var wins = 0;
     var losses = 0;
     var started = false;
-    clicked = false;
+    var clicked = false;
     var placeholder = [];
 
     function generateWord() {
@@ -43,7 +44,7 @@ $(document).ready(function() {
         console.log('started = true');
 
         currentWord = '';
-        $('#currentword').html(currentWord);
+        $('#currentword').html(currentWord).css({'dislplay':'inline'});
         currentWord = wordBank[count];
         console.log(currentWord);
 
@@ -53,25 +54,25 @@ $(document).ready(function() {
             placeholder.push('*');
         };
         $('#currentword').html(placeholder);
+
+    };
+
+    function dance(){
+        $('#currentword').css({'display':'none'});
+        $('#guesses').css({'display':'none'});
+        $('#remaining').css({'display':'none'});
+        $('#video').empty();
+        $('#dance').append('<source src="assets/images/dance.mp4" type="video/mp4"/>').css({'display': 'inline'});
+        $("#dance")[0].load();
     };
 
     function playAgain(){
-        
-        $('#video').empty();
-        $('#video').append('<source src="assets/images/dance.mp4" type="video/mp4"/>').css({'display':'inline'});
-        $("#video")[0].load();
-        
-        wins++;
-        $('#wins').html('Wins: ' + wins);
-        console.log(wins);
         placeholder = [];
-    
         started = false;
         wins = 0;
         losses = 0;
         count = -1;
         clicked = false;
-        
         $('#button').text('Play Again!');
     };
 
@@ -98,7 +99,7 @@ $(document).ready(function() {
                     console.log('placeholder: ' + placeholder);
                     $('#currentword').html(placeholder);
 
-                    if(placeholder.indexOf('*')=== -1) {
+                    if(placeholder.indexOf('*')=== -1 && count < wordBank.length) {
                         $('#currentword').html(wordBank[count]);
                         console.log('count',video[count]);
 
@@ -114,16 +115,22 @@ $(document).ready(function() {
                         placeholder = [];
                         
                         $('#video').on('ended', function(){
-                            guessesRemaining = 15;
-                            $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
-                            lettersUsed = [];
-                            $('#guesses').html('Letters Used: ' + lettersUsed);
-                            if(count === wordBank.length){
-                                playAgain();
-                            }
-                            else if(started === false) {
+                            if(started === false) {
                                 generateWord();
-                            } 
+                            }
+                        });
+
+                    } if(count === 9) {
+        
+                        
+                        guessesRemaining = 15;
+                        $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
+                        lettersUsed = [];
+                        $('#guesses').html('Letters Used: ' + lettersUsed);
+
+                        $('#video').on('ended', function(){
+                            dance();
+                            playAgain();
                         });
 
                     }
@@ -147,10 +154,7 @@ $(document).ready(function() {
                 $('#remaining').html('Guesses Remaining: '+ guessesRemaining);
                 lettersUsed = [];
                 $('#guesses').html('Letters Used: ' + lettersUsed);
-                if(count === wordBank.length){
-                    playAgain();
-                }
-                else if(started === false) {
+                if(started === false) {
                     generateWord();
                 } 
             });
@@ -168,7 +172,11 @@ $(document).ready(function() {
 
     $('#button').on('click', function(){
         if(started === false && clicked === false) {
+            $('#guesses').css({'display':'block'});
+            $('#remaining').css({'display':'block'});
             $('#button').text('Word Generator');
+            $('#video').css({'display':'none'});
+            $('#dance').css({'display':'none'});
             generateWord();
         }
     });
